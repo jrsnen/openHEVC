@@ -39,7 +39,13 @@
 #include <sys/param.h>
 #endif
 #include <sys/types.h>
+
+#if __cplusplus >= 201703L || _MSC_VER >= 1911
+#if __has_include(<sys/sysctl.h>)
 #include <sys/sysctl.h>
+#endif // __has_include
+#endif // __cplusplus
+
 #endif
 #if HAVE_UNISTD_H
 #include <unistd.h>
