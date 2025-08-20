@@ -419,7 +419,15 @@ int libOpenShvcDecode2(OpenHevc_Handle openHevcHandle, const unsigned char *buff
         } else {
             openHevcContext->avpkt.size = 0;
             openHevcContext->avpkt.data = NULL;
+
+
+#if LIBAVCODEC_VERSION_MAJOR >= 59
+            // FFmpeg >= 5.0 expects AVCodecContext *
+            avcodec_flush_buffers(openHevcContext->c);
+#else
+            // FFmpeg 4.x compatibility
             avcodec_flush_buffers(openHevcContext->codec);
+#endif
         }
 
         if(i < openHevcContexts->active_layer)
