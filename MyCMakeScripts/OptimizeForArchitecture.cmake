@@ -291,7 +291,9 @@ macro(OptimizeForArchitecture)
    elseif(TARGET_ARCHITECTURE STREQUAL "none")
       # add this clause to remove it from the else clause
    else(TARGET_ARCHITECTURE STREQUAL "core")
-      message(FATAL_ERROR "Unknown target architecture: \"${TARGET_ARCHITECTURE}\". Please set TARGET_ARCHITECTURE to a supported value.")
+        message(WARNING "Unknown target architecture: \"${TARGET_ARCHITECTURE}\". Falling back to generic.")
+        set(TARGET_ARCHITECTURE "generic")
+        list(APPEND _march_flag_list "generic")
    endif(TARGET_ARCHITECTURE STREQUAL "core")
 
    if(NOT TARGET_ARCHITECTURE STREQUAL "none")
